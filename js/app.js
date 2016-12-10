@@ -1,4 +1,3 @@
-
 // Enemies our player must avoid
 // This is a class definition, which is assigning a function object to var Enemy
 // On the right side of the equation is a constructor function
@@ -10,6 +9,8 @@ var Enemy = function(x, y) {
     this.x = x;
     this.y = y;
     this.s=this.x+this.y;
+    
+    this.speed = Math.floor(Math.random() * 10 ) + 1;
 };
 
 // Update the enemy's position, required method for game
@@ -17,23 +18,45 @@ var Enemy = function(x, y) {
 Enemy.prototype.update = function(dt) {
    
    
-    if(this.x<500)
+    /*if(this.x<500)
     {
         this.x += (190 * dt);
     }
-    else {this.x=-100;}
+    else {this.x=-100;}*/
 
-
- if(this.x < player.x + 10 && this.x + 20 > player.x && this.y < player.y + 10 && this.y + 20 > player.y) 
+       this.move();
+ /*if(this.x < player.x + 10 && this.x + 20 > player.x && this.y < player.y + 10 && this.y + 20 > player.y) 
  {
       
-        player.reset();}
+        player.reset();}*/
+        this.collide();
 };
-
-
-
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+Enemy.prototype.collide = function() {
+    var bugBox = {width: 50, height: 40};
+    var playerBox = {width: 40, height: 50};
+
+    if (this.x < player.x + playerBox.width &&
+        this.x + bugBox.width > player.x &&
+        this.y < player.y + playerBox.height &&
+        bugBox.height + this.y > player.y) {
+          
+                 player.resetPlayer();
+                 alert("Sorry you lose.'OK' to play once again");
+
+    }
+};
+
+Enemy.prototype.move = function(dt){
+    this.x += this.speed;
+    if (this.x == 500) {
+        this.x = -100;
+        var y_positions = [60, 145, 230];
+            y_positions.sort(function(){return 0.5 - Math.random();});
+        this.y = parseInt(y_positions.pop());
+    }
 };
 
 
@@ -50,13 +73,13 @@ var Player = function() {
 // If the player reaches the water, reset back to grass
 Player.prototype.update = function(dt) {
     if (this.y == -10){
-        this.y = 200
+        this.y = 200;
         alert("Congrats you win.");
     }
 };
 
 // Resets the player location. Called when the player & enemy collide.
-Player.prototype.reset = function() {
+Player.prototype.resetPlayer = function() {
     this.x = 200;
     this.y = 400;
 };
@@ -68,8 +91,8 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(keyPressed) {
 switch(keyPressed) {
     case 'left':
-    if(this.x<=0){
-        } else {
+    if(this.x>0){
+        
             this.x += -100;
         }
     break;
