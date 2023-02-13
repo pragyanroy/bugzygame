@@ -54,7 +54,7 @@ Enemy.prototype.move = function(dt){
     if (this.x == 500) {
         this.x = -100;
         var y_positions = [60, 145, 230];
-            y_positions.sort(function(){return 0.5 - Math.random();});
+            y_positions.sort(function(){return 50- Math.random();});
         this.y = parseInt(y_positions.pop());
     }
 };
