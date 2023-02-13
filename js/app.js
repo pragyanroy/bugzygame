@@ -10,7 +10,7 @@ var Enemy = function(x, y) {
     this.y = y;
     this.s=this.x+this.y;
     
-    this.speed = Math.floor(Math.random() * 50 ) + 1;
+    this.speed = Math.floor(Math.random() * .55) + 1;
 };
 
 // Update the enemy's position, required method for game
@@ -54,7 +54,7 @@ Enemy.prototype.move = function(dt){
     if (this.x == 500) {
         this.x = -100;
         var y_positions = [60, 145, 230];
-            y_positions.sort(function(){return 50- Math.random();});
+            y_positions.sort(function(){return 1 - Math.random();});
         this.y = parseInt(y_positions.pop());
     }
 };
