@@ -10,7 +10,7 @@ var Enemy = function(x, y) {
     this.y = y;
     this.s=this.x+this.y;
     
-    this.speed = Math.floor(Math.random() * 100) + 1;
+    this.speed = Math.floor(Math.random() * 1000) + 1;
 };
 
 // Update the enemy's position, required method for game
